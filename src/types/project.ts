@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export enum InputType {
   TEXT = "text",
   SELECT = "select",
@@ -9,6 +11,7 @@ export enum InputType {
 export interface SelectOption {
   value: string;
   label: string;
+  icon?: ReactNode;
 }
 
 export interface QuestionConfig {
