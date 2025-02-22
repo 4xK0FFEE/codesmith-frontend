@@ -1,101 +1,210 @@
 "use client";
 
-import { useProjectForm } from "@/hooks/useProjectForm";
-import { projectQuestions } from "@/config/projectQuestions";
-import { InputType, QuestionConfig } from "@/types/project";
-import Button from "./Button";
-import Spinner from "./Spinner";
-import Checkbox from "./Checkbox";
-import Input from "./Input";
+import type React from "react";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
+import { PROJECT_TYPES, projectQuestions } from "@/config/projectQuestions";
+import { InputType, type QuestionConfig } from "@/types/project";
+
+type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
 
 interface ProjectFormProps {
-  projectType: string;
-  onSubmit: (data: any) => void;
+	projectType: ProjectType;
+	onSubmit: (data: any) => void;
 }
 
 export const ProjectForm = ({ projectType, onSubmit }: ProjectFormProps) => {
-  const { formState, updateField, errors, submitForm } =
-    useProjectForm(projectType);
-  const questions = projectQuestions[projectType];
+	const router = useRouter();
+	const { toast } = useToast();
+	const [formState, setFormState] = useState<Record<string, any>>({});
+	const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+	const questions = projectQuestions[projectType];
 
-    console.group("Form Submission Attempt");
-    console.log("Raw Form State:", formState);
+	const updateField = (id: string, value: any) => {
+		setFormState((prev) => ({ ...prev, [id]: value }));
+		if (errors[id]) {
+			setErrors((prev) => ({ ...prev, [id]: "" }));
+		}
+	};
 
-    const result = await submitForm();
+	const validateForm = () => {
+		const newErrors: Record<string, string> = {};
+		questions.forEach((question) => {
+			if (question.required && !formState[question.id]) {
+				newErrors[question.id] = "This field is required";
+			}
+		});
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
 
-    if (result) {
-      console.log("Form Validation:", "Success");
-      console.groupEnd();
-      onSubmit({
-        projectConfiguration: formState,
-        validationResult: result,
-      });
-    } else {
-      console.log("Form Validation:", "Failed");
-      console.log("Validation Errors:", errors);
-      console.groupEnd();
-    }
-  };
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (validateForm()) {
+			onSubmit(formState);
+			toast({
+				title: "Project Configuration Submitted",
+				description: "Your project is being generated...",
+			});
+		} else {
+			toast({
+				title: "Form Validation Failed",
+				description: "Please check the form for errors and try again.",
+				variant: "destructive",
+			});
+		}
+	};
 
-  const renderField = (question: QuestionConfig) => {
-    switch (question.type) {
-      case InputType.SELECT:
-        return (
-          <Spinner
-            options={question.options || []}
-            placeholder={`Select ${question.label}`}
-            value={formState.answers[question.id] || ""}
-            onChange={(value) => updateField(question.id, value)}
-            className="w-full"
-          />
-        );
+	const renderField = (question: QuestionConfig) => {
+		switch (question.type) {
+			case InputType.SELECT:
+				return (
+					<Select
+						value={formState[question.id] || ""}
+						onValueChange={(value) => updateField(question.id, value)}
+					>
+						<SelectTrigger>
+							<SelectValue placeholder={`Select ${question.label}`} />
+						</SelectTrigger>
+						<SelectContent>
+							{question.options?.map((option) => (
+								<SelectItem key={option.value} value={option.value}>
+									{option.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+				);
+			case InputType.CHECKBOX:
+				return (
+					<div className="flex items-center space-x-2">
+						<Checkbox
+							id={question.id}
+							checked={formState[question.id] || false}
+							onCheckedChange={(checked) => updateField(question.id, checked)}
+						/>
+						<label
+							htmlFor={question.id}
+							className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+						>
+							{question.description}
+						</label>
+					</div>
+				);
+			case InputType.TEXTAREA:
+				return (
+					<Textarea
+						value={formState[question.id] || ""}
+						onChange={(e) => updateField(question.id, e.target.value)}
+						placeholder={question.label}
+					/>
+				);
+			default:
+				return (
+					<Input
+						value={formState[question.id] || ""}
+						onChange={(e) => updateField(question.id, e.target.value)}
+						placeholder={question.label}
+					/>
+				);
+		}
+	};
 
-      case InputType.CHECKBOX:
-        return (
-          <Checkbox
-            checked={formState.answers[question.id] || false}
-            onChange={(checked) => updateField(question.id, checked)}
-            label={question.description}
-          />
-        );
-
-      default:
-        return (
-          <Input
-            value={formState.answers[question.id] || ""}
-            onChange={(e) => updateField(question.id, e.target.value)}
-            placeholder={question.label}
-            className="w-full"
-          />
-        );
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      {questions.map((question) => (
-        <div key={question.id} className="space-y-3">
-          <div className="flex items-center justify-between">
-            <label
-              htmlFor={question.id}
-              className="block text-lg font-medium text-cosmic-text"
-            >
-              {question.label}
-              {question.required && (
-                <span className="ml-1 text-red-500">*</span>
-              )}
-            </label>
-          </div>
-          {renderField(question)}
-          {errors[question.id] && (
-            <p className="text-sm text-red-500 mt-1">{errors[question.id]}</p>
-          )}
-        </div>
-      ))}
-      <Button text="Generate Project" />
-    </form>
-  );
+	return (
+		<Card className="w-full max-w-2xl mx-auto">
+			<CardHeader>
+				<CardTitle>Configure Your {projectType} Project</CardTitle>
+				<CardDescription>
+					Fill in the details to generate your custom project
+				</CardDescription>
+			</CardHeader>
+			<form onSubmit={handleSubmit}>
+				<CardContent className="space-y-6">
+					{questions.map((question) => (
+						<div key={question.id} className="space-y-2">
+							<Label htmlFor={question.id}>
+								{question.label}
+								{question.required && (
+									<span className="text-destructive ml-1">*</span>
+								)}
+							</Label>
+							{renderField(question)}
+							{errors[question.id] && (
+								<p className="text-sm text-destructive">
+									{errors[question.id]}
+								</p>
+							)}
+						</div>
+					))}
+				</CardContent>
+				<CardFooter className="flex justify-between">
+					<Button variant="outline" onClick={() => router.back()}>
+						Back
+					</Button>
+					<Button type="submit">Generate Project</Button>
+				</CardFooter>
+			</form>
+		</Card>
+	);
 };
+
+export default function GenerateCustomProject() {
+	const router = useRouter();
+	const [projectType, setProjectType] = useState<ProjectType>(
+		PROJECT_TYPES.FRONTEND
+	);
+
+	const handleProjectSubmit = (data: any) => {
+		console.log("Project Configuration:", data);
+		// Here you would typically send the data to your backend or process it further
+		router.push("/project-generation-result");
+	};
+
+	return (
+		<div className="container mx-auto py-10">
+			<h1 className="text-3xl font-bold mb-6">Generate Custom Project</h1>
+			<div className="mb-6">
+				<Label htmlFor="projectType">Select Project Type</Label>
+				<Select
+					value={projectType}
+					onValueChange={(value: ProjectType) => setProjectType(value)}
+				>
+					<SelectTrigger>
+						<SelectValue placeholder="Select project type" />
+					</SelectTrigger>
+					<SelectContent>
+						{Object.entries(PROJECT_TYPES).map(([key, value]) => (
+							<SelectItem key={key} value={value}>
+								{value}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
+			</div>
+			<ProjectForm projectType={projectType} onSubmit={handleProjectSubmit} />
+		</div>
+	);
+}
