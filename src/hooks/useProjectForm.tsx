@@ -2,9 +2,11 @@
 
 import { useState, useCallback } from "react";
 import { ProjectConfig } from "@/types/project";
-import { projectQuestions } from "@/config/projectQuestions";
+import { PROJECT_TYPES, projectQuestions } from "@/config/projectQuestions";
 
-export const useProjectForm = (projectType: string) => {
+type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
+
+export const useProjectForm = (projectType: ProjectType) => {
   const [formState, setFormState] = useState<ProjectConfig>({
     projectType,
     answers: {},

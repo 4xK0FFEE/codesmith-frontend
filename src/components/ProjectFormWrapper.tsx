@@ -1,9 +1,12 @@
 "use client";
 
+import { PROJECT_TYPES } from "@/config/projectQuestions";
 import { ProjectForm } from "./ProjectForm";
 
+type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
+
 interface ProjectFormWrapperProps {
-  projectType: string;
+  projectType: ProjectType;
 }
 
 export default function ProjectFormWrapper({

@@ -1,15 +1,17 @@
 "use client";
 
 import { useProjectForm } from "@/hooks/useProjectForm";
-import { projectQuestions } from "@/config/projectQuestions";
+import { PROJECT_TYPES, projectQuestions } from "@/config/projectQuestions";
 import { InputType, QuestionConfig } from "@/types/project";
 import Button from "./Button";
 import Spinner from "./Spinner";
 import Checkbox from "./Checkbox";
 import Input from "./Input";
 
+type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
+
 interface ProjectFormProps {
-  projectType: string;
+  projectType: ProjectType;
   onSubmit: (data: any) => void;
 }
 

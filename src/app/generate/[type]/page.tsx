@@ -2,6 +2,12 @@ import { notFound } from "next/navigation";
 import ProjectFormWrapper from "@/components/ProjectFormWrapper";
 import { PROJECT_TYPES } from "@/config/projectQuestions";
 
+type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
+
+function isValidProjectType(type: string): type is ProjectType {
+  return Object.values(PROJECT_TYPES).includes(type as ProjectType);
+}
+
 interface GeneratePageProps {
   params: {
     type: string;
@@ -9,7 +15,13 @@ interface GeneratePageProps {
 }
 
 export default function GeneratePage({ params }: GeneratePageProps) {
-  const projectType = params.type;
+  const { type } = params;
+
+  if (!isValidProjectType(type)) {
+    notFound();
+  }
+
+  const projectType = type;
 
   if (!Object.values(PROJECT_TYPES).includes(projectType)) {
     notFound();
