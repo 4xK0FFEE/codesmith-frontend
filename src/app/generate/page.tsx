@@ -95,24 +95,49 @@ export default function Home() {
 			{/* Project Type Tiles */}
 			<div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 				{[
-					{ text: "Frontend", desc: "Build a UI-focused project" },
-					{ text: "Backend", desc: "Set up APIs and databases" },
-					{ text: "Full-Stack", desc: "Combine frontend & backend" },
-					{ text: "CLI Tool", desc: "Command-line based projects" },
-					{ text: "Mobile App", desc: "Build Android & iOS apps" },
-					{ text: "ML Model", desc: "Train & deploy ML models" },
-					{ text: "Game Dev", desc: "Develop games & simulations" },
-					{ text: "API Service", desc: "Microservices & REST APIs" },
+					{
+						text: "Frontend",
+						desc: "Build a UI-focused project",
+						url: "frontend",
+					},
+					{
+						text: "Backend",
+						desc: "Set up APIs and databases",
+						url: "backend",
+					},
+					{
+						text: "Full-Stack",
+						desc: "Combine frontend & backend",
+						url: "fullstack",
+					},
+					{ text: "CLI Tool", desc: "Command-line based projects", url: "cli" },
+					{
+						text: "Mobile App",
+						desc: "Build Android & iOS apps",
+						url: "mobile",
+					},
+					{ text: "ML Model", desc: "Train & deploy ML models", url: "ai-ml" },
+					{
+						text: "Game Dev",
+						desc: "Develop games & simulations",
+						url: "game-dev",
+					},
+					{
+						text: "API Service",
+						desc: "Microservices & REST APIs",
+						url: "devops",
+					},
 				].map((track) => (
 					<Card
 						key={track.text}
 						text={track.text}
 						description={track.desc}
 						buttonText="Select"
-						onClick={() => handleTrackSelection(track.text.toLowerCase())} // Lowercase for cleaner URLs
+						onClick={() => handleTrackSelection(track.url)} // Lowercase for cleaner URLs
 					/>
 				))}
 			</div>
 		</div>
 	);
 }
+	
