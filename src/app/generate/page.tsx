@@ -39,7 +39,7 @@ export default function GenerateCustomProject() {
     const getAllTemplates = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/templates/all"
+          "http://http://172.20.10.2:3000/api/templates/all"
         );
         setTemplates(response.data);
       } catch (error) {
