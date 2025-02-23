@@ -23,6 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function GenerateCustomProject() {
   const router = useRouter();
@@ -205,6 +206,7 @@ export default function GenerateCustomProject() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

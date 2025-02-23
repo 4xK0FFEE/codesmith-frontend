@@ -22,6 +22,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface Template {
   id: number;
@@ -179,6 +180,7 @@ export default function ExploreTemplates() {
           </div>
         )}
       </div>
+      <Footer></Footer>
     </div>
   );
 }
