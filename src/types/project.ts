@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { IconType } from "react-icons/lib";
 
 export enum InputType {
   TEXT = "text",
@@ -11,7 +11,7 @@ export enum InputType {
 export interface SelectOption {
   value: string;
   label: string;
-  icon?: ReactNode;
+  icon?: IconType;
 }
 
 export interface QuestionConfig {
