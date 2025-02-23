@@ -27,6 +27,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { PROJECT_TYPES, projectQuestions } from "@/config/projectQuestions";
 import { InputType, type QuestionConfig } from "@/types/project";
+import { CardSelect } from "./CardSelect";
 
 type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
 
@@ -82,21 +83,42 @@ export const ProjectForm = ({ projectType, onSubmit }: ProjectFormProps) => {
     switch (question.type) {
       case InputType.SELECT:
         return (
-          <Select
+          // <Select
+          //   value={formState[question.id] || ""}
+          //   onValueChange={(value) => updateField(question.id, value)}
+          // >
+          //   <SelectTrigger>
+          //     <SelectValue placeholder={`Select ${question.label}`} />
+          //   </SelectTrigger>
+          //   <SelectContent>
+          //     {question.options?.map((option) => (
+          //       <SelectItem key={option.value} value={option.value}>
+          //         {option.label}
+          //       </SelectItem>
+          //     ))}
+          //   </SelectContent>
+          // </Select>
+
+          // Replace your current Select with this:
+          // <CardSelect
+          //   value={formState[question.id] || ""}
+          //   onValueChange={(value) => updateField(question.id, value)}
+          //   options={question.options?.map((option) => ({
+          //     ...option,
+          //     icon: option.icon,
+          //   }))}
+          // />
+          <CardSelect
             value={formState[question.id] || ""}
             onValueChange={(value) => updateField(question.id, value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder={`Select ${question.label}`} />
-            </SelectTrigger>
-            <SelectContent>
-              {question.options?.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={
+              question.options?.map((option) => ({
+                value: option.value,
+                label: option.label,
+                icon: option.icon,
+              })) || []
+            } // Provide empty array as fallback
+          />
         );
       case InputType.CHECKBOX:
         return (
@@ -142,7 +164,7 @@ export const ProjectForm = ({ projectType, onSubmit }: ProjectFormProps) => {
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4">
           {questions.map((question) => (
             <div key={question.id} className="space-y-2">
               <Label htmlFor={question.id}>

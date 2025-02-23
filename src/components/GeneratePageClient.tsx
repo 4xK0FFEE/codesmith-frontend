@@ -4,6 +4,8 @@ import { notFound, useRouter } from "next/navigation";
 import ProjectFormWrapper from "@/components/ProjectFormWrapper";
 import { PROJECT_TYPES } from "@/config/projectQuestions";
 import { useEffect, useState } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
 
 type ProjectType = (typeof PROJECT_TYPES)[keyof typeof PROJECT_TYPES];
 
@@ -54,12 +56,16 @@ export default function GeneratePageClient({ type }: GeneratePageClientProps) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6">
-        Configure Your{" "}
-        {projectType.charAt(0).toUpperCase() + projectType.slice(1)} Project
-      </h1>
-      <ProjectFormWrapper projectType={projectType} />
+    <div className="flex flex-col">
+      <Header />
+      <div className="max-w-2xl mx-auto py-8 px-4 flex-grow">
+        <h1 className="text-3xl font-bold mb-6">
+          Configure Your{" "}
+          {projectType.charAt(0).toUpperCase() + projectType.slice(1)} Project
+        </h1>
+        <ProjectFormWrapper projectType={projectType} />
+      </div>
+      <Footer />
     </div>
   );
 }
