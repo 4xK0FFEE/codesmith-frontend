@@ -25,6 +25,7 @@ import {
 
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function LandingPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
@@ -194,10 +195,7 @@ export default function LandingPage() {
           </Button>
         </section>
       </main>
-
-      <footer className="border-t bg-background/50 py-6 text-center text-sm text-muted-foreground">
-        <p>Built with ❤️ by Team 4xK0FFEE | FOSSHACK&apos;25</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
