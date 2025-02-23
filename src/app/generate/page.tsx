@@ -48,7 +48,6 @@ export default function GenerateCustomProject() {
 
     getAllTemplates();
 
-    // Load data from localStorage
     setProjectName(localStorage.getItem("projectName") || "");
     setProjectAuthor(localStorage.getItem("projectAuthor") || "");
     setProjectAudience(localStorage.getItem("projectAudience") || "");

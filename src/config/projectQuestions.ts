@@ -1,4 +1,9 @@
 import { QuestionConfig, InputType } from "@/types/project";
+import { FaAngular, FaReact, FaVuejs } from "react-icons/fa";
+import { RiNextjsLine, RiSvelteFill } from "react-icons/ri";
+import { BiLogoRedux } from "react-icons/bi";
+import { SiNuxtdotjs, SiTypescript } from "react-icons/si";
+import { IoLogoJavascript } from "react-icons/io";
 
 export const PROJECT_TYPES = {
   FRONTEND: "frontend",
@@ -18,12 +23,12 @@ export const projectQuestions: Record<string, QuestionConfig[]> = {
       label: "Framework",
       type: InputType.SELECT,
       options: [
-        { value: "react", label: "React" },
-        { value: "next", label: "Next.js" },
-        { value: "vue", label: "Vue.js" },
-        { value: "nuxt", label: "Nuxt.js" },
-        { value: "svelte", label: "Svelte" },
-        { value: "angular", label: "Angular" },
+        { value: "react", label: "React", icon: FaReact },
+        { value: "next", label: "Next.js", icon: RiNextjsLine },
+        { value: "vue", label: "Vue.js", icon: FaVuejs },
+        { value: "nuxt", label: "Nuxt.js", icon: SiNuxtdotjs },
+        { value: "svelte", label: "Svelte", icon: RiSvelteFill },
+        { value: "angular", label: "Angular", icon: FaAngular },
       ],
       required: true,
     },
@@ -32,8 +37,8 @@ export const projectQuestions: Record<string, QuestionConfig[]> = {
       label: "Language",
       type: InputType.SELECT,
       options: [
-        { value: "typescript", label: "TypeScript" },
-        { value: "javascript", label: "JavaScript" },
+        { value: "typescript", label: "TypeScript", icon: SiTypescript },
+        { value: "javascript", label: "JavaScript", icon: IoLogoJavascript },
       ],
       required: true,
     },
@@ -56,7 +61,7 @@ export const projectQuestions: Record<string, QuestionConfig[]> = {
       type: InputType.SELECT,
       options: [
         { value: "none", label: "None" },
-        { value: "redux", label: "Redux" },
+        { value: "redux", label: "Redux", icon: BiLogoRedux },
         { value: "zustand", label: "Zustand" },
         { value: "recoil", label: "Recoil" },
         { value: "jotai", label: "Jotai" },
