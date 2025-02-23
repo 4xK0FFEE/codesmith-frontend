@@ -123,12 +123,12 @@ const dummyTemplates = [
 export default function ExploreTemplates() {
   const router = useRouter();
 
-  const [templates, setTemplates] = useState<Template[]>(dummyTemplates);
+  const [templates] = useState<Template[]>(dummyTemplates);
   const [filteredTemplates, setFilteredTemplates] =
     useState<Template[]>(dummyTemplates);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("All");
-  const [selectedLanguage, setSelectedLanguage] = useState("All");
+  const [selectedLanguage] = useState("All");
 
   const handleDownload = async (id: number) => {
     await axios.get(`http://172.20.10.2:3000/api/files/download/${id}`);

@@ -1,9 +1,7 @@
 import { QuestionConfig, InputType } from "@/types/project";
 import {
   FaAcquisitionsIncorporated,
-  FaAngular,
   FaAws,
-  FaBootstrap,
   FaBrain,
   FaDocker,
   FaDraft2Digital,
@@ -14,40 +12,26 @@ import {
   FaHive,
   FaJava,
   FaJenkins,
-  FaLanguage,
   FaMemory,
   FaNodeJs,
-  FaNpm,
   FaPuzzlePiece,
-  FaPython,
   FaReact,
   FaRegAddressBook,
   FaRust,
   FaSwift,
   FaSync,
   FaUnity,
-  FaVuejs,
   FaWeight,
   FaWpforms,
-  FaYarn,
 } from "react-icons/fa";
-import {
-  RiGpsFill,
-  RiNextjsLine,
-  RiSvelteFill,
-  RiTailwindCssFill,
-} from "react-icons/ri";
-import { GoDot, GoDotFill, GoSingleSelect } from "react-icons/go";
+import { RiGpsFill } from "react-icons/ri";
+import { GoDot, GoSingleSelect } from "react-icons/go";
 import { VscAzure, VscAzureDevops } from "react-icons/vsc";
 import {
   BiBookHeart,
-  BiCloudSnow,
   BiCommand,
-  BiCustomize,
   BiInfoSquare,
   BiLogoFlutter,
-  BiLogoRedux,
-  BiUnlink,
 } from "react-icons/bi";
 import {
   TbBrandPython,
@@ -57,15 +41,12 @@ import {
   TbPrompt,
 } from "react-icons/tb";
 import {
-  SiAegisauthenticator,
   SiAngular,
   SiAntdesign,
   SiApachekafka,
   SiArcgis,
-  SiArgos,
   SiAuth0,
   SiAwsamplify,
-  SiAwslambda,
   SiAwsorganizations,
   SiBabylondotjs,
   SiBootstrap,
@@ -129,7 +110,6 @@ import {
   SiPysyft,
   SiPytest,
   SiPython,
-  SiPythonanywhere,
   SiPytorch,
   SiRabbitmq,
   SiRailway,
@@ -165,11 +145,9 @@ import {
   SiVercel,
   SiVitest,
   SiVuedotjs,
-  SiWeb3Dotjs,
   SiWebauthn,
   SiYarn,
 } from "react-icons/si";
-import { IoLogoJavascript } from "react-icons/io";
 import {
   BsBadge3dFill,
   BsBox2,
@@ -181,7 +159,6 @@ import {
 } from "react-icons/bs";
 import {
   MdBookOnline,
-  MdFlutterDash,
   MdQuestionAnswer,
   MdRealEstateAgent,
   MdWeb,
@@ -193,27 +170,16 @@ import {
   GiClick,
   GiCobra,
   GiDistraction,
-  GiMaterialsScience,
   GiMultipleTargets,
   GiNightVision,
   GiPlatform,
   GiReactor,
-  GiSpiderWeb,
   GiToken,
   GiTopHat,
   GiTorch,
   GiWindyStripes,
 } from "react-icons/gi";
-import {
-  FaClapperboard,
-  FaDiagramNext,
-  FaFlutter,
-  FaGolang,
-  FaJarWheat,
-  FaShield,
-} from "react-icons/fa6";
-import { AppleIcon } from "lucide-react";
-import { LuCircleX } from "react-icons/lu";
+import { FaClapperboard, FaFlutter, FaGolang, FaShield } from "react-icons/fa6";
 
 export const PROJECT_TYPES = {
   FRONTEND: "frontend",

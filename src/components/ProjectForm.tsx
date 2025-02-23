@@ -1,3 +1,4 @@
+/* eslint disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import type React from "react";
@@ -24,7 +25,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
 import { PROJECT_TYPES, projectQuestions } from "@/config/projectQuestions";
 import { InputType, type QuestionConfig } from "@/types/project";
 import { CardSelect } from "./CardSelect";
@@ -38,7 +38,6 @@ interface ProjectFormProps {
 
 export const ProjectForm = ({ projectType, onSubmit }: ProjectFormProps) => {
   const router = useRouter();
-  const { toast } = useToast();
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -66,16 +65,7 @@ export const ProjectForm = ({ projectType, onSubmit }: ProjectFormProps) => {
     e.preventDefault();
     if (validateForm()) {
       onSubmit(formState);
-      toast({
-        title: "Project Configuration Submitted",
-        description: "Your project is being generated...",
-      });
     } else {
-      toast({
-        title: "Form Validation Failed",
-        description: "Please check the form for errors and try again.",
-        variant: "destructive",
-      });
     }
   };
 
@@ -83,31 +73,6 @@ export const ProjectForm = ({ projectType, onSubmit }: ProjectFormProps) => {
     switch (question.type) {
       case InputType.SELECT:
         return (
-          // <Select
-          //   value={formState[question.id] || ""}
-          //   onValueChange={(value) => updateField(question.id, value)}
-          // >
-          //   <SelectTrigger>
-          //     <SelectValue placeholder={`Select ${question.label}`} />
-          //   </SelectTrigger>
-          //   <SelectContent>
-          //     {question.options?.map((option) => (
-          //       <SelectItem key={option.value} value={option.value}>
-          //         {option.label}
-          //       </SelectItem>
-          //     ))}
-          //   </SelectContent>
-          // </Select>
-
-          // Replace your current Select with this:
-          // <CardSelect
-          //   value={formState[question.id] || ""}
-          //   onValueChange={(value) => updateField(question.id, value)}
-          //   options={question.options?.map((option) => ({
-          //     ...option,
-          //     icon: option.icon,
-          //   }))}
-          // />
           <CardSelect
             value={formState[question.id] || ""}
             onValueChange={(value) => updateField(question.id, value)}

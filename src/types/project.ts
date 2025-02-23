@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IconType } from "react-icons/lib";
 
 export enum InputType {

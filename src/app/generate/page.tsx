@@ -33,7 +33,7 @@ export default function GenerateCustomProject() {
   const [projectAuthor, setProjectAuthor] = useState("");
   const [projectAudience, setProjectAudience] = useState("");
   const [projectPlan, setProjectPlan] = useState("");
-  const [templates, setTemplates] = useState([]);
+  const [, setTemplates] = useState([]);
 
   useEffect(() => {
     const getAllTemplates = async () => {
@@ -107,7 +107,7 @@ export default function GenerateCustomProject() {
             <CardHeader>
               <CardTitle>Project Details</CardTitle>
               <CardDescription>
-                Tell us about your project and we'll help you get started
+                Tell us about your project and we&apos;ll help you get started
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

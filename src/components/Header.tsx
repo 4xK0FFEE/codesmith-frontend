@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useRouter } from "next/navigation";
-import { Github } from "lucide-react";
 
 const Header = () => {
   const router = useRouter();
