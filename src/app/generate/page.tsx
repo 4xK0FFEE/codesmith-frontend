@@ -135,7 +135,7 @@ export default function GenerateCustomProject() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={handleSubmit}>Generate</Button>
           </CardFooter>
         </Card>
         <div className="mt-10">
@@ -188,19 +188,12 @@ export default function GenerateCustomProject() {
               <Card
                 key={track.text}
                 className="cursor-pointer hover:border-primary transition-colors"
+                onClick={() => handleTrackSelection(track.url)}
               >
                 <CardHeader>
                   <CardTitle>{track.text}</CardTitle>
                   <CardDescription>{track.desc}</CardDescription>
                 </CardHeader>
-                <CardFooter>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleTrackSelection(track.url)}
-                  >
-                    Select
-                  </Button>
-                </CardFooter>
               </Card>
             ))}
           </div>
