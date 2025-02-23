@@ -17,7 +17,7 @@ const Header = () => {
           Explore Templates
         </Button>
         <Button variant="ghost" onClick={() => router.push("/generate")}>
-          Custom Project
+          Generate Project
         </Button>
       </nav>
       <div className="flex items-center gap-4">
