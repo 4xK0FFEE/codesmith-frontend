@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import axios from "axios";
 
 interface Template {
   id: number;
@@ -55,12 +56,16 @@ export default function ExploreTemplates() {
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
   useEffect(() => {
-    fetch("/api/templates")
-      .then((res) => res.json())
-      .then((data) => {
-        setTemplates(data);
-        setFilteredTemplates(data);
-      });
+    const getAllTemplates = async () => {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/templates/all"
+      );
+
+      setTemplates(response.data);
+      setFilteredTemplates(response.data);
+    };
+
+    getAllTemplates();
   }, []);
 
   useEffect(() => {
