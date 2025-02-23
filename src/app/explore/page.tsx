@@ -31,6 +31,7 @@ interface Template {
   name: string;
   description: string;
   project_type: string;
+  download_url: string;
   tags: string[];
 }
 
@@ -46,27 +47,92 @@ const projectTypes = [
   { value: "devops", label: "DevOps" },
 ];
 
+const dummyTemplates = [
+  {
+    id: 1,
+    name: "Next.js + Tailwind + tRPC",
+    description:
+      "Full-stack TypeScript with Next.js, Tailwind CSS, and tRPC for type-safe APIs.",
+    project_type: "fullstack",
+    download_url:
+      "https://github.com/your-repo/nextjs-tailwind-trpc/archive/main.zip",
+    tags: ["Fullstack", "Next.js", "Tailwind", "tRPC", "TypeScript"],
+  },
+  {
+    id: 2,
+    name: "Remix + Prisma + PostgreSQL",
+    description:
+      "Full-stack application with Remix framework, Prisma ORM, and PostgreSQL database.",
+    project_type: "fullstack",
+    download_url:
+      "https://github.com/your-repo/remix-prisma-postgres/archive/main.zip",
+    tags: ["Fullstack", "Remix", "Prisma", "PostgreSQL", "TypeScript"],
+  },
+  {
+    id: 3,
+    name: "Nuxt + Supabase + Tailwind",
+    description:
+      "Full-stack Vue.js with Nuxt framework, Supabase backend, and Tailwind CSS.",
+    project_type: "fullstack",
+    download_url:
+      "https://github.com/your-repo/nuxt-supabase-tailwind/archive/main.zip",
+    tags: ["Fullstack", "Nuxt.js", "Supabase", "Tailwind", "TypeScript"],
+  },
+  {
+    id: 4,
+    name: "SvelteKit + Drizzle + SQLite",
+    description:
+      "Full-stack Svelte with SvelteKit, Drizzle ORM, and SQLite database.",
+    project_type: "fullstack",
+    download_url:
+      "https://github.com/your-repo/sveltekit-drizzle-sqlite/archive/main.zip",
+    tags: ["Fullstack", "SvelteKit", "Drizzle", "SQLite", "TypeScript"],
+  },
+  {
+    id: 7,
+    name: "FastAPI + SQLModel + Celery",
+    description:
+      "FastAPI backend with SQLModel ORM and Celery for background tasks.",
+    project_type: "backend",
+    download_url:
+      "https://github.com/your-repo/fastapi-sqlmodel-celery/archive/main.zip",
+    tags: ["Backend", "FastAPI", "SQLModel", "Celery", "Python"],
+  },
+  {
+    id: 10,
+    name: "React Native + Firebase + MobX",
+    description:
+      "React Native mobile app with Firebase backend and MobX state management.",
+    project_type: "mobile",
+    download_url:
+      "https://github.com/your-repo/react-native-firebase-mobx/archive/main.zip",
+    tags: ["Mobile", "React Native", "Firebase", "MobX", "TypeScript"],
+  },
+  {
+    id: 13,
+    name: "FastAPI + PyTorch + MLflow",
+    description:
+      "AI service with FastAPI backend, PyTorch models, and MLflow for experiment tracking.",
+    project_type: "ai-ml",
+    download_url:
+      "https://github.com/your-repo/fastapi-pytorch-mlflow/archive/main.zip",
+    tags: ["AI-ML", "FastAPI", "PyTorch", "MLflow", "Python"],
+  },
+];
+
 export default function ExploreTemplates() {
   const router = useRouter();
 
-  const [templates, setTemplates] = useState<Template[]>([]);
-  const [filteredTemplates, setFilteredTemplates] = useState<Template[]>([]);
+  const [templates, setTemplates] = useState<Template[]>(dummyTemplates);
+  const [filteredTemplates, setFilteredTemplates] =
+    useState<Template[]>(dummyTemplates);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
-  useEffect(() => {
-    const getAllTemplates = async () => {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/templates/all"
-      );
-
-      setTemplates(response.data);
-      setFilteredTemplates(response.data);
-    };
-
-    getAllTemplates();
-  }, []);
+  const handleDownload = async (id: number) => {
+    await axios.get(`http://172.20.10.2:3000/api/files/download/${id}`);
+  };
 
   useEffect(() => {
     const filtered = templates.filter((template) => {
@@ -176,10 +242,10 @@ export default function ExploreTemplates() {
                 </CardContent>
                 <CardFooter>
                   <Button
-                    onClick={() => router.push(`/template/${template.id}`)}
+                    onClick={() => handleDownload(template.id)}
                     className="w-full"
                   >
-                    View Template
+                    Download
                   </Button>
                 </CardFooter>
               </Card>
