@@ -79,9 +79,9 @@ export default function ExploreTemplates() {
   }, [searchTerm, selectedType, selectedLanguage, templates]);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="container mx-auto py-10 px-4">
+      <div className="container mx-auto py-10 px-4 flex-grow">
         <h1 className="text-4xl font-bold mb-8">Explore Templates</h1>
         <p className="text-xl mb-12 max-w-3xl">
           Discover a wide range of project templates to kickstart your
